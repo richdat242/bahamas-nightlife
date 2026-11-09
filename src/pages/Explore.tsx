@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { Seo } from '@/components/Seo';
 import {
   Armchair, ArrowRight, Award, Beer, Building2, CalendarHeart, ChevronLeft, ChevronRight, Crown, Disc3, Drum, Flame, Flower2, Gem, Heart,
   LayoutGrid, List, LocateFixed, MapPin, Martini, Mic, Moon, Music, Radio, Rainbow, SearchX, Shirt, Sparkles, Star, Sun, TrendingUp,
@@ -358,6 +359,7 @@ export default function Explore() {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-6 pb-12">
+      <Seo path="/" title="Nassau Nightlife | Bars, Clubs & Events Tonight" description="Discover Nassau nightlife, bars, clubs, live music and upcoming events. Explore the map to find your next night out." />
       {/* ------------------------------------------------------------ Hero */}
       <section className="mt-4 md:mt-8">
         <div className="neon-board relative rounded-[2rem] overflow-hidden text-white px-5 py-7 md:px-10 md:py-12 shadow-[0_24px_60px_rgba(0,0,0,0.55)]">

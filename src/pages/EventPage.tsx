@@ -4,6 +4,7 @@ import { MapContainer, Marker, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ArrowLeft, CalendarHeart, Clock, ExternalLink, Map as MapIcon, MapPin, Navigation, Share2, Star, Ticket } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { Seo } from '@/components/Seo';
 import { useDirectory } from '@/lib/directory';
 import { useActivity } from '@/lib/activity';
 import { eventPosition, eventWhen, isEventEnded, isEventLive } from '@/lib/events';
@@ -52,12 +53,6 @@ export default function EventPage() {
 
   const e = fetched ?? cached;
 
-  useEffect(() => {
-    if (e) document.title = `${e.title} — Nassau Nights`;
-    return () => {
-      document.title = 'Nassau Nights — Bars, clubs & events in Nassau';
-    };
-  }, [e]);
 
   if (!e) {
     if (notFound && !loading) {
@@ -98,6 +93,23 @@ export default function EventPage() {
 
   return (
     <div className="w-full pb-12">
+      <Seo
+        path={`/events/${e.id}`}
+        title={`${e.title} | Nassau Events — Nassau Nights`}
+        description={(e.description?.trim() || `Explore ${e.title} in Nassau, Bahamas. Find event details, dates, location and more on Nassau Nights.`).slice(0, 160)}
+        image={e.image_url}
+        structuredData={e.is_published ? {
+          "@context": "https://schema.org",
+          "@type": "Event",
+          name: e.title,
+          startDate: e.start_date,
+          endDate: e.end_date,
+          description: e.description || e.title,
+          url: `https://nassaunights.com/events/${e.id}`,
+          ...(e.image_url ? { image: [e.image_url] } : {}),
+          ...(e.address || venue?.address ? { location: { "@type": "Place", name: venue?.name || e.address || e.title, address: e.address || venue?.address } } : {}),
+        } : null}
+      />
       <div className="relative h-64 md:h-96 overflow-hidden bg-night-800">
         <EventArt e={e} className="absolute inset-0 w-full h-full" />
         <div className="absolute inset-0 bg-gradient-to-t from-night-950 via-night-950/10 to-black/30" />
