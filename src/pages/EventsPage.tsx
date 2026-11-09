@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Seo } from '@/components/Seo';
 import { CalendarHeart, CalendarPlus, Map as MapIcon } from 'lucide-react';
 import { useDirectory } from '@/lib/directory';
 import { compareEvents, isEventEnded, isEventLive, isEventSoon } from '@/lib/events';
@@ -56,6 +57,7 @@ export default function EventsPage() {
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 md:px-6 pb-12">
+      <Seo path="/events" title="Events in Nassau, Bahamas | Tonight & This Weekend" description="Find upcoming concerts, DJ nights, parties and live entertainment in Nassau. Explore dates, venues and event details." />
       <section className="pt-8 md:pt-12">
         <p className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-glow-300">
           <CalendarHeart className="w-4 h-4" /> What’s on
