@@ -7,6 +7,7 @@ import {
   MapPin, Martini, MessageSquarePlus, Navigation, Phone, Radio, Share2, Star,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { Seo } from '@/components/Seo';
 import { useDirectory } from '@/lib/directory';
 import { DAY_NAMES, dayLabel, hasHours, todayIndex } from '@/lib/hours';
 import { directionsUrl } from '@/lib/geo';
@@ -100,12 +101,6 @@ export default function VenuePage() {
     };
   }, [slug]);
 
-  useEffect(() => {
-    if (r) document.title = `${r.name} — Nassau Nights`;
-    return () => {
-      document.title = 'Nassau Nights — Bars, clubs & events in Nassau';
-    };
-  }, [r]);
 
   const gallery = useMemo(() => photos.filter((p) => p.kind === 'gallery'), [photos]);
   const menuPhotos = useMemo(() => photos.filter((p) => p.kind === 'menu'), [photos]);
@@ -165,6 +160,12 @@ export default function VenuePage() {
 
   return (
     <div className="w-full pb-12">
+      <Seo
+        path={`/v/${r.slug}`}
+        title={`${r.name} | Nassau Bars & Nightlife — Nassau Nights`}
+        description={(r.description?.trim() || `Explore ${r.name} in Nassau, Bahamas. Find venue details, location, photos and more on Nassau Nights.`).slice(0, 160)}
+        image={r.cover_url}
+      />
       {/* Hero */}
       <div className="relative h-64 md:h-96 bg-white/10 overflow-hidden">
         <SafeImg src={hero} name={r.name} lazy={false} className="w-full h-full" />
